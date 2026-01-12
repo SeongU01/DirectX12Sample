@@ -36,6 +36,18 @@
 *.exe
 *.out
 *.app
+bin/
 
 # debug information files
 *.dwo
+
+# Visual Studio folders
+.vs/
+
+# MSBuild / MSVC intermediate files
+*.tlog
+*.recipe
+*.lib.recipe
+
+# Build logs
+*.log
