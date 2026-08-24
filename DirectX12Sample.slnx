@@ -1,7 +1,7 @@
 <Solution>
   <Configurations>
     <Platform Name="x64" />
-    <Platform Name="x86" />
   </Configurations>
+  <Project Path="001.Initialize/001.Initialize.vcxproj" Id="ff81f3c8-d7a7-46e0-ba41-75baeeae7e1d" />
   <Project Path="DirectX12Sample/DirectX12Sample.vcxproj" Id="f0da1f6c-f706-415a-b167-2df728c5ba4f" />
 </Solution>
