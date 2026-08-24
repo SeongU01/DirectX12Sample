@@ -1,42 +1,221 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
+    <Filter Include="Application">
+      <UniqueIdentifier>{4cf7e522-9e44-402b-8832-33f16425e09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{26e377e1-0502-42b2-b1d7-a278c60adf8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="헤더 파일">
+    <Filter Include="Include">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{aeb2d730-cda7-402d-8c13-812441f1edac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Device">
+      <UniqueIdentifier>{cf2f98a1-01dc-41a3-b4dd-c9855d01d69d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GraphicsCore">
+      <UniqueIdentifier>{d1eb37bf-ce16-449d-9672-8acf7b5c6cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ViewManager">
+      <UniqueIdentifier>{1b259d92-8062-4ef7-b919-198ee4e9f7df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\CommandController">
+      <UniqueIdentifier>{b13ee659-3a35-48e3-a55b-f3c7cd49f738}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\CommandSet">
+      <UniqueIdentifier>{564e80a5-49b6-419b-bb2f-9df0803ef238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\d3dUtil">
+      <UniqueIdentifier>{fd024f58-164c-4ad7-b332-0bdd90e1611d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Renderer">
+      <UniqueIdentifier>{658e5f2b-799f-423c-bd1d-e7b0f175e7af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ResourceManager">
+      <UniqueIdentifier>{3a7d6bfd-bbfd-4596-b2b6-f568a3c47c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ResourceManager\Resource">
+      <UniqueIdentifier>{371b5b16-a85e-4efb-84e9-c3eb8679baea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\BaseMesh">
+      <UniqueIdentifier>{179e36d0-a554-4f3b-89cb-0ae176ca7c8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\VIBuffer">
+      <UniqueIdentifier>{2b43944c-99b3-4ae7-9e19-e59d80b4b584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\BaseMesh\Quad">
+      <UniqueIdentifier>{f0963b15-3677-445c-96f5-b677e0218e53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\GeometryGenerator">
+      <UniqueIdentifier>{539eafc9-3e64-4dfe-a417-01537fa6ff1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Model">
+      <UniqueIdentifier>{a0688a96-e4a5-4c70-a967-a75438711de4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\ImGuiLayer">
+      <UniqueIdentifier>{3d6a0582-1e52-48e3-a6cd-714a3abde946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{4f45f6f2-7e35-40d7-a72d-2efeddfc0411}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Util.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Application</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Graphics\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsCore.h">
+      <Filter>Graphics\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiLayer.h">
+      <Filter>Graphics\ImGuiLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewManager.h">
+      <Filter>Graphics\ViewManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics_Structs.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics_Header.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Externs.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandController.h">
+      <Filter>Graphics\CommandController</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandSet.h">
+      <Filter>Graphics\CommandSet</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dUtil.h">
+      <Filter>Graphics\d3dUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Graphics\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Graphics\ResourceManager\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Graphics\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMesh.h">
+      <Filter>Graphics\BaseMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="VIBuffer.h">
+      <Filter>Graphics\VIBuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad.h">
+      <Filter>Graphics\BaseMesh\Quad</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryGenerator.h">
+      <Filter>Graphics\GeometryGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Graphics\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\include\imgui_impl_dx12.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\include\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Graphics\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore.cpp">
+      <Filter>Graphics\GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiLayer.cpp">
+      <Filter>Graphics\ImGuiLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewManager.cpp">
+      <Filter>Graphics\ViewManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandController.cpp">
+      <Filter>Graphics\CommandController</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandSet.cpp">
+      <Filter>Graphics\CommandSet</Filter>
+    </ClCompile>
+    <ClCompile Include="d3dUtil.cpp">
+      <Filter>Graphics\d3dUtil</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Graphics\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Graphics\ResourceManager\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Graphics\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMesh.cpp">
+      <Filter>Graphics\BaseMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="VIBuffer.cpp">
+      <Filter>Graphics\VIBuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>Graphics\BaseMesh\Quad</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryGenerator.cpp">
+      <Filter>Graphics\GeometryGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Graphics\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui_impl_dx12.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\source\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

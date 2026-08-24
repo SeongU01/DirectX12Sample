@@ -1,0 +1,14 @@
+<Project>
+  <Target Name="RemoveTransientCompilerMetadata" AfterTargets="Build">
+    <ItemGroup>
+      <TransientCompilerMetadata Include="$(IntDir)**\*.obj.dt.d.json" />
+      <TransientCompilerMetadata Include="$(IntDir)**\*.obj.dt.module.json" />
+      <TransientCompilerMetadata Include="$(IntDir)**\*.obj.dt.module.json.command" />
+      <TransientCompilerMetadata Include="$(IntDir)**\*.idb" />
+      <TransientCompilerMetadata Include="$(IntDir)**\*.vcxproj.FileListAbsolute.txt" />
+      <TransientCompilerMetadata Include="$(OutDir)**\*.idb" />
+      <TransientCompilerMetadata Include="$(MSBuildThisFileDirectory)**\*.idb" />
+    </ItemGroup>
+    <Delete Files="@(TransientCompilerMetadata)" />
+  </Target>
+</Project>

@@ -43,11 +43,29 @@ bin/
 
 # Visual Studio folders
 .vs/
+.codegraph/
+*.vcxproj.user
+
+# Agent-local work state
+.omo/
+.codex/
+
+# Runtime-local UI state
+imgui.ini
+
+# Visual Studio build directories
+**/x64/
+**/Debug/
 
 # MSBuild / MSVC intermediate files
 *.tlog
 *.recipe
 *.lib.recipe
+*.obj.dt.d.json
+*.obj.dt.module.json
+*.obj.dt.module.json.command
+*.idb
+*.vcxproj.FileListAbsolute.txt
 
 # Build logs
 *.log

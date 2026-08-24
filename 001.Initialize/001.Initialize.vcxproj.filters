@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="01.MainApp">
+      <UniqueIdentifier>{15a881e8-bff2-474d-a41d-c0026eaa0e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.ClientUI">
+      <UniqueIdentifier>{80554cae-20f2-4e0e-b51f-adfd5ff3e15d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainApp.cpp">
+      <Filter>01.MainApp</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ClientUI.cpp">
+      <Filter>02.ClientUI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MainApp.h">
+      <Filter>01.MainApp</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientUI.h">
+      <Filter>02.ClientUI</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
