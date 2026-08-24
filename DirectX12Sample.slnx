@@ -3,5 +3,6 @@
     <Platform Name="x64" />
   </Configurations>
   <Project Path="001.Initialize/001.Initialize.vcxproj" Id="ff81f3c8-d7a7-46e0-ba41-75baeeae7e1d" />
+  <Project Path="002.TriangleApp/002.TriangleApp.vcxproj" Id="505f6d22-d6c2-45c5-9aa6-f084367283b0" />
   <Project Path="DirectX12Sample/DirectX12Sample.vcxproj" Id="f0da1f6c-f706-415a-b167-2df728c5ba4f" />
 </Solution>
