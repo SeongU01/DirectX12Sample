@@ -1,4 +1,4 @@
-﻿#include "GraphicsCore.h"
+#include "GraphicsCore.h"
 #include "pch.h"
 #include "ImGuiLayer.h"
 
@@ -85,6 +85,21 @@ void GraphicsCore::RenderUI() const
 void GraphicsCore::Flip() const
 {
 	_renderer->Flip();
+}
+
+MeshHandle GraphicsCore::CreateMesh(const GeometryGenerator::MeshData& meshData) const
+{
+	return _renderer->CreateMesh(meshData);
+}
+
+void GraphicsCore::SetView(const RenderView& view) const
+{
+	_renderer->SetView(view);
+}
+
+void GraphicsCore::Submit(const RenderItem& item) const
+{
+	_renderer->Submit(item);
 }
 
 void GraphicsCore::AllocateShaderResourceDescriptor(D3D12_CPU_DESCRIPTOR_HANDLE& cpuHandle,

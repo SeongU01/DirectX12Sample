@@ -14,8 +14,8 @@ void Quad::Initialize(float x, float y, float w, float h, float depth)
     VIBuffer::Descriptor        descriptor{
                .vertexData   = static_cast<void*>(meshData.vertices.data()),
                .indexData    = static_cast<void*>(meshData.indices32.data()),
-               .vertexSize   = static_cast<UINT>(sizeof(Vertex) * meshData.vertices.size()),
-               .vertexStride = sizeof(Vertex),
+               .vertexSize   = static_cast<UINT>(sizeof(GeometryGenerator::Vertex) * meshData.vertices.size()),
+               .vertexStride = sizeof(GeometryGenerator::Vertex),
                .indexSize    = static_cast<UINT>(sizeof(UINT) * meshData.indices32.size()),
                .indexCount   = static_cast<UINT>(meshData.indices32.size()),
     };

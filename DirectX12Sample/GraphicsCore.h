@@ -1,4 +1,6 @@
 #pragma once
+#include "GeometryGenerator.h"
+
 class GraphicsCore
 {
 public:
@@ -17,6 +19,9 @@ public:
 	void RenderUI() const;
 	void Flip() const;
 	void Finalize();
+	MeshHandle CreateMesh(const GeometryGenerator::MeshData& meshData) const;
+	void       SetView(const RenderView& view) const;
+	void       Submit(const RenderItem& item) const;
 
 	bool ProcessUIWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const;
 
