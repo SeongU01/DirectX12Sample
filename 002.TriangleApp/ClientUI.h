@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "pch.h"
 
 class ClientUI
@@ -8,7 +8,7 @@ public:
     ~ClientUI() = default;
 
     // 클라이언트별 위젯 구성만 담당하며 ImGui 초기화와 렌더링은 엔진에 맡긴다.
-    void               Draw();
+    void               Draw(LinearColor& sceneColor);
     const LinearColor& GetClearColor() const { return _clearColor; }
 
 private:
