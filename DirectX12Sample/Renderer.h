@@ -1,9 +1,13 @@
 #pragma once
+#include "GeometryGenerator.h"
+
+class GraphicsPipeline;
+
 class Renderer
 {
 public:
-    Renderer() = default;
-    ~Renderer() = default;
+    Renderer();
+    ~Renderer();
 
 public:
 	void Initialize();
@@ -11,18 +15,17 @@ public:
 	void Render(const LinearColor& clearColor);
 	void Flip();
 
-private:
-    void CreateDefaultResource();
-    void CreateDefaultGeometry();
-    void CreateDefaultTexture();
-    void CreateDefaultRenderTarget();
-    void CreateDefaultShader();
+    MeshHandle CreateMesh(const GeometryGenerator::MeshData& meshData);
+    void       SetView(const RenderView& view);
+    void       Submit(const RenderItem& item);
 
 private:
-    void RenderToBackBuffer();
+    void InitializePipeline();
+    void InitializeFrameConstants();
+    void UpdateFrameConstants();
 
-private:
-    std::list<std::shared_ptr<Resource>> _defaultResource;
-
-	BaseMesh* _frameQuad = nullptr;
+    std::unique_ptr<GraphicsPipeline> _pipeline;
+    std::vector<RenderItem>           _renderItems;
+    RenderView                        _renderView;
+    ComPtr<ID3D12Resource>            _frameConstantBuffer;
 };

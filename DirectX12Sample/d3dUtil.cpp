@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "d3dUtil.h"
 
 Microsoft::WRL::ComPtr<ID3D12Resource> d3dUtil::CreateBufferWithData(
@@ -56,23 +56,23 @@ UINT d3dUtil::AlignTo(UINT value, UINT alignment)
     return (((value + alignment - 1) / alignment) * alignment);
 }
 
-ComPtr<IDxcBlob> d3dUtil::CompileShaderLibrary(LPCWSTR fileName, LPCWSTR targetName)
+ComPtr<IDxcBlob> d3dUtil::CompileShader(LPCWSTR fileName, LPCWSTR entryPoint, LPCWSTR targetName)
 {
-    static IDxcCompiler*       pCompiler = nullptr;
-    static IDxcLibrary*        pLibrary  = nullptr;
-    static IDxcIncludeHandler* dxcIncludeHandler;
+    static ComPtr<IDxcCompiler>       compiler;
+    static ComPtr<IDxcLibrary>        library;
+    static ComPtr<IDxcIncludeHandler> includeHandler;
 
     HRESULT hr = S_OK;
 
     // Initialize the DXC compiler and compiler helper
-    if (!pCompiler)
+    if (!compiler)
     {
-        hr = DxcCreateInstance(CLSID_DxcCompiler, __uuidof(IDxcCompiler), reinterpret_cast<void**>(&pCompiler));
-        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : Failed Create CLSID_DxcCompiler");
-        hr = DxcCreateInstance(CLSID_DxcLibrary, __uuidof(IDxcLibrary), reinterpret_cast<void**>(&pLibrary));
-        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : Failed Create CLSID_DxcLibrary");
-        hr = pLibrary->CreateIncludeHandler(&dxcIncludeHandler);
-        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : FAILED Create IncludeHandler");
+        hr = DxcCreateInstance(CLSID_DxcCompiler, IID_PPV_ARGS(compiler.GetAddressOf()));
+        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : Failed Create CLSID_DxcCompiler");
+        hr = DxcCreateInstance(CLSID_DxcLibrary, IID_PPV_ARGS(library.GetAddressOf()));
+        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : Failed Create CLSID_DxcLibrary");
+        hr = library->CreateIncludeHandler(includeHandler.GetAddressOf());
+        FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : FAILED Create IncludeHandler");
     }
 
     // Open and read the file
@@ -86,42 +86,42 @@ ComPtr<IDxcBlob> d3dUtil::CompileShaderLibrary(LPCWSTR fileName, LPCWSTR targetN
     std::string sShader = strStream.str();
 
     // Create blob from the string
-    IDxcBlobEncoding* pTextBlob;
-    hr = pLibrary->CreateBlobWithEncodingFromPinned(LPBYTE(sShader.c_str()), static_cast<uint32_t>(sShader.size()), 0,
-                                                    &pTextBlob);
-    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : pLibrary->CreateBlobWithEncodingFromPinned Failed");
-    IDxcOperationResult* pResult;
+    ComPtr<IDxcBlobEncoding> textBlob;
+    hr = library->CreateBlobWithEncodingFromPinned(
+        reinterpret_cast<LPBYTE>(sShader.data()), static_cast<uint32_t>(sShader.size()), CP_UTF8,
+        textBlob.GetAddressOf());
+    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : CreateBlobWithEncodingFromPinned Failed");
+    ComPtr<IDxcOperationResult> result;
 #ifdef _DEBUG
     LPCWSTR args[] = {
         L"-Zi", // 디버그 정보
         L"-Od", // 최적화 비활성화
-        // 그 외 필요 옵션
     };
-    // Compile
-    hr = pCompiler->Compile(pTextBlob, fileName, L"", targetName, args, _countof(args), nullptr, 0, dxcIncludeHandler,
-                            &pResult);
+    hr = compiler->Compile(textBlob.Get(), fileName, entryPoint, targetName, args, _countof(args), nullptr, 0,
+                           includeHandler.Get(), result.GetAddressOf());
 #else
-    hr = pCompiler->Compile(pTextBlob, fileName, L"", targetName, nullptr, 0, nullptr, 0, dxcIncludeHandler, &pResult);
+    hr = compiler->Compile(textBlob.Get(), fileName, entryPoint, targetName, nullptr, 0, nullptr, 0,
+                           includeHandler.Get(), result.GetAddressOf());
 #endif // _DEBUG
-    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : pCompiler->Compile Failed");
+    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : compiler->Compile Failed");
 
     // Verify the result
     HRESULT resultCode;
-    hr = pResult->GetStatus(&resultCode);
-    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : pResult->GetStatus Failed")
+    hr = result->GetStatus(&resultCode);
+    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : result->GetStatus Failed")
     if (FAILED(resultCode))
     {
-        IDxcBlobEncoding* pError;
-        hr = pResult->GetErrorBuffer(&pError);
+        ComPtr<IDxcBlobEncoding> error;
+        hr = result->GetErrorBuffer(error.GetAddressOf());
         if (FAILED(hr))
         {
             throw std::logic_error("Failed to get shader compiler error");
         }
 
         // Convert error blob to a string
-        std::vector<char> infoLog(pError->GetBufferSize() + 1);
-        memcpy(infoLog.data(), pError->GetBufferPointer(), pError->GetBufferSize());
-        infoLog[pError->GetBufferSize()] = 0;
+        std::vector<char> infoLog(error->GetBufferSize() + 1);
+        memcpy(infoLog.data(), error->GetBufferPointer(), error->GetBufferSize());
+        infoLog[error->GetBufferSize()] = 0;
 
         std::string errorMsg = "Shader Compiler Error:\n";
         errorMsg.append(infoLog.data());
@@ -131,7 +131,7 @@ ComPtr<IDxcBlob> d3dUtil::CompileShaderLibrary(LPCWSTR fileName, LPCWSTR targetN
     }
 
     ComPtr<IDxcBlob> pBlob;
-    hr = pResult->GetResult(pBlob.GetAddressOf());
-    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShaderLibrary : pBlob->GetResult Failed");
+    hr = result->GetResult(pBlob.GetAddressOf());
+    FAILED_CHECK_MESSAGE(hr, L"d3dUtil::CompileShader : result->GetResult Failed");
     return pBlob;
 }

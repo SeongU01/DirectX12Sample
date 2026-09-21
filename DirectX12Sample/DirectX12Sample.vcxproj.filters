@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Application">
@@ -63,6 +63,9 @@
     <Filter Include="Graphics\ImGuiLayer">
       <UniqueIdentifier>{3d6a0582-1e52-48e3-a6cd-714a3abde946}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Camera">
+      <UniqueIdentifier>{0f169896-70db-4560-97fb-15962fe1dc0b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{4f45f6f2-7e35-40d7-a72d-2efeddfc0411}</UniqueIdentifier>
     </Filter>
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="GraphicsCore.h">
       <Filter>Graphics\GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsPipeline.h">
+      <Filter>Graphics\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiLayer.h">
       <Filter>Graphics\ImGuiLayer</Filter>
@@ -137,6 +143,9 @@
     <ClInclude Include="Model.h">
       <Filter>Graphics\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Graphics\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="ThirdParty\include\imgui_impl_dx12.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -159,6 +168,9 @@
     </ClCompile>
     <ClCompile Include="GraphicsCore.cpp">
       <Filter>Graphics\GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsPipeline.cpp">
+      <Filter>Graphics\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiLayer.cpp">
       <Filter>Graphics\ImGuiLayer</Filter>
@@ -199,6 +211,9 @@
     <ClCompile Include="Model.cpp">
       <Filter>Graphics\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="ThirdParty\source\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -217,5 +232,10 @@
     <ClCompile Include="ThirdParty\source\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Shaders\BasicColor.hlsl">
+      <Filter>Graphics\Renderer</Filter>
+    </Content>
   </ItemGroup>
 </Project>

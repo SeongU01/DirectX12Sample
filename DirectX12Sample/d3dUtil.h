@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 class d3dUtil
 {
@@ -23,7 +23,7 @@ public:
         ID3D12Device* device, ID3D12GraphicsCommandList* cmdList, const void* initData, UINT64 byteSize,
         Microsoft::WRL::ComPtr<ID3D12Resource>& uploadBuffer);
     static UINT             AlignTo(UINT value, UINT alignment);
-    static ComPtr<IDxcBlob> CompileShaderLibrary(LPCWSTR fileName, LPCWSTR targetName);
+    static ComPtr<IDxcBlob> CompileShader(LPCWSTR fileName, LPCWSTR entryPoint, LPCWSTR targetName);
     static int              Ceil(float n, float d) { return (int)ceil((float)n / d); }
 };
 struct AccelerationStructureBuffers
