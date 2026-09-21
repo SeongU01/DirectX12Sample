@@ -96,6 +96,9 @@ void ImGuiLayer::Render() const
     // ImGui 텍스처가 사용하는 셰이더 가시 힙을 그리기 전에 다시 바인딩한다.
     ID3D12DescriptorHeap* heaps[] = {_graphicsCore->_viewManager->GetShaderResourceHeap()};
     ID3D12GraphicsCommandList* commandList = _graphicsCore->_device->GetCommandList();
+    // UI는 깊이 없는 오버레이이며 DSVFormat=UNKNOWN인 ImGui PSO와 바인딩을 맞춘다.
+    const auto renderTarget = _graphicsCore->_device->GetBackBufferHandle();
+    commandList->OMSetRenderTargets(1, &renderTarget, FALSE, nullptr);
     commandList->SetDescriptorHeaps(1, heaps);
     ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }

@@ -16,6 +16,7 @@ public:
 	UINT                               GetCBVSRVUAVDescriptorSize() { return _cbvSrvUavDescriptorSize; }
 	UINT                               GetDSVDescriptorSize() { return _dsvDescriptorSize; }
 	DXGI_FORMAT                        GetBackBufferFormat() { return _backBufferFormat; }
+    DXGI_FORMAT                        GetDepthBufferFormat() const { return DXGI_FORMAT_D32_FLOAT; }
 
 	UINT                               GetCurrentBackBufferIndex() { return _renderTargetIndex; }
 	const D3D12_CPU_DESCRIPTOR_HANDLE& GetBackBufferHandle() const { return _renderTargetHandles[_renderTargetIndex]; }
@@ -61,6 +62,7 @@ private:
 	void ResizeSwapChain();
 	void CreateDeviceAndSwapChain(HWND hwnd, D3D_FEATURE_LEVEL feature);
 	void CreateBackBuffer();
+    void CreateDepthBuffer();
 	void CreateBuffer(UINT size, ComPtr<ID3D12Resource>& buffer);
 
 public:
@@ -99,5 +101,8 @@ public:
 
 	    /// DXR
 private:
+    // 프레임마다 GPU 완료를 기다리는 현재 렌더러에서는 깊이 버퍼 하나를 공유한다.
+    ComPtr<ID3D12Resource> _depthBuffer;
+    D3D12_CPU_DESCRIPTOR_HANDLE _depthStencilHandle{};
     void CheckDXRSupport();
 };

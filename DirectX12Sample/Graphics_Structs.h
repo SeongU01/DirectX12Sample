@@ -23,6 +23,13 @@ struct RenderView
     };
 };
 
+// 조명 없는 기존 샘플은 유지하고, 면의 방향을 보여줄 도형만 평면 음영을 선택한다.
+enum class ShadingMode : UINT
+{
+    Unlit = 0,
+    Flat = 1,
+};
+
 struct RenderItem
 {
     MeshHandle  mesh;
@@ -33,6 +40,7 @@ struct RenderItem
         0.0f, 0.0f, 0.0f, 1.0f,
     };
     LinearColor tint{1.0f, 1.0f, 1.0f, 1.0f};
+    ShadingMode shading = ShadingMode::Unlit;
 };
 
 struct DescriptorHandles

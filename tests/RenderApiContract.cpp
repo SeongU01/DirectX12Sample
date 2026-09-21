@@ -31,5 +31,41 @@ int main()
 
     const RenderView& view = camera.GetRenderView();
     const float projectedAspect = view.projection._11 / view.projection._22;
-    return std::abs(projectedAspect - (1.0f / aspectRatio)) < 0.0001f ? 0 : 1;
+    if (std::abs(projectedAspect - (1.0f / aspectRatio)) >= 0.0001f)
+    {
+        return 1;
+    }
+
+    // 기본 도형의 크기와 바깥쪽 와인딩을 검사해 컬링 계약을 고정한다.
+    GeometryGenerator generator;
+    const auto box = generator.CreateBox(1.0f, 1.0f, 1.0f, 0);
+    if (box.vertices.size() != 24 || box.indices32.size() != 36)
+    {
+        return 2;
+    }
+    for (const auto& vertex : box.vertices)
+    {
+        if (std::abs(vertex.position.x) != 0.5f || std::abs(vertex.position.y) != 0.5f ||
+            std::abs(vertex.position.z) != 0.5f || vertex.position.w != 1.0f)
+        {
+            return 3;
+        }
+    }
+    for (size_t i = 0; i < box.indices32.size(); i += 3)
+    {
+        if (box.indices32[i] >= box.vertices.size() || box.indices32[i + 1] >= box.vertices.size() ||
+            box.indices32[i + 2] >= box.vertices.size())
+        {
+            return 4;
+        }
+        const XMVECTOR a = XMLoadFloat4(&box.vertices[box.indices32[i]].position);
+        const XMVECTOR b = XMLoadFloat4(&box.vertices[box.indices32[i + 1]].position);
+        const XMVECTOR c = XMLoadFloat4(&box.vertices[box.indices32[i + 2]].position);
+        const XMVECTOR normal = XMVector3Cross(b - a, c - a);
+        if (XMVectorGetX(XMVector3Dot(normal, a + b + c)) <= 0.0f)
+        {
+            return 5;
+        }
+    }
+    return 0;
 }

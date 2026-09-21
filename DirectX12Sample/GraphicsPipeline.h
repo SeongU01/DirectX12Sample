@@ -16,6 +16,8 @@ public:
         D3D12_ROOT_SIGNATURE_DESC             rootSignature{};
         D3D12_PRIMITIVE_TOPOLOGY_TYPE         topologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
         DXGI_FORMAT                           renderTargetFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+        // UNKNOWN은 깊이 검사를 끈 파이프라인, 지정된 포맷은 깊이 검사/쓰기를 사용한다.
+        DXGI_FORMAT                           depthStencilFormat = DXGI_FORMAT_UNKNOWN;
     };
 
     void Initialize(Device& device, const Descriptor& descriptor);

@@ -56,6 +56,15 @@ The tool surface uses `ImGui::StyleColorsDark()` without local overrides. Widget
 - **Accessibility**: keyboard navigation and numeric entry remain available.
 - **Motion**: no decorative animation; the frame clear changes immediately.
 
+### Box Controls Panel
+
+- **Structure**: Back Buffer color, Box Color (`ColorEdit3`), three labeled X/Y/Z rotation sliders, and Reset Rotation.
+- **Units**: degrees, -180 to 180 per axis; reset sets all axes to zero without changing colors.
+- **Layout**: standard auto-sized ImGui window; field width is 18 default-font units, with labels outside the fields.
+- **States**: hover, keyboard focus, slider drag, direct numeric entry, color popup, and collapsed panel use default ImGui styling.
+- **Feedback**: rotation and color changes apply before scene submission in the same frame. The opaque box uses optional engine flat shading so its faces remain distinguishable; Box Color is its base RGB, not opacity.
+- **Ownership**: the client owns rotation and color. Mesh generation, depth testing, shading and ImGui lifecycle remain in the engine.
+
 ## 6. Motion & Interaction
 
 - State changes are immediate and occur in the current frame.
