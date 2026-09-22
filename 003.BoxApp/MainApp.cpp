@@ -32,10 +32,15 @@ void MainApp::Run()
         {
             _timer->Tick();
             _graphicsCore->BeginUI();
-            _clientUI->Draw(_sceneColor);
+            _clientUI->Draw(_sceneColor, _rotationDegrees);
             _graphicsCore->EndUI();
+            // UI에서 바뀐 각도를 같은 프레임의 원점 중심 회전에 반영한다.
+            XMStoreFloat4x4(&_sceneWorld, XMMatrixRotationRollPitchYaw(
+                XMConvertToRadians(_rotationDegrees.x), XMConvertToRadians(_rotationDegrees.y),
+                XMConvertToRadians(_rotationDegrees.z)));
             _graphicsCore->SetView(_camera.GetRenderView());
-            _graphicsCore->Submit(RenderItem{.mesh = _sceneMesh, .world = _sceneWorld, .tint = _sceneColor});
+            _graphicsCore->Submit(RenderItem{
+                .mesh = _sceneMesh, .world = _sceneWorld, .tint = _sceneColor, .shading = ShadingMode::Flat});
             _graphicsCore->Render(_clientUI->GetClearColor());
             _graphicsCore->RenderUI();
             _graphicsCore->Flip();
@@ -45,7 +50,7 @@ void MainApp::Run()
 
 bool MainApp::Initailize(HINSTANCE hInstance)
 {
-    _application = Application::Create(hInstance, TEXT("002.TriangleApp"), 1600, 900, false, true);
+    _application = Application::Create(hInstance, TEXT("003.BoxApp"), 1600, 900, false, true);
     if (!_application)
     {
         return false;
@@ -57,19 +62,15 @@ bool MainApp::Initailize(HINSTANCE hInstance)
         _graphicsCore->Initialize(_application->GetWindow(), _application->GetWidth(), _application->GetHeight(),
                                   FeatureLevel::LEVEL_12_1, false, Global::isRayTracing);
 
-        _camera.SetLookAt({0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
+        // 초기 자세에서도 세 면을 확인할 수 있도록 카메라만 비스듬히 배치한다.
+        _camera.SetLookAt({2.0f, 1.5f, -3.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f});
         const float aspectRatio =
             static_cast<float>(_application->GetWidth()) / static_cast<float>(_application->GetHeight());
         _camera.SetPerspective(XM_PIDIV4, aspectRatio, 0.1f, 100.0f);
 
-        GeometryGenerator::MeshData sceneGeometry;
-        sceneGeometry.vertices = {
-            {{0.0f, 0.577350269f, 0.0f, 1.0f}, {0.5f, 0.0f}},
-            {{0.5f, -0.288675135f, 0.0f, 1.0f}, {1.0f, 1.0f}},
-            {{-0.5f, -0.288675135f, 0.0f, 1.0f}, {0.0f, 1.0f}},
-        };
-        sceneGeometry.indices32 = {0, 1, 2};
-        _sceneMesh = _graphicsCore->CreateMesh(sceneGeometry);
+        // 기본 도형의 정점/인덱스 생성과 GPU 업로드는 기존 엔진 기능을 재사용한다.
+        GeometryGenerator geometryGenerator;
+        _sceneMesh = _graphicsCore->CreateMesh(geometryGenerator.CreateBox(1.0f, 1.0f, 1.0f, 0));
 
         _clientUI = std::make_unique<ClientUI>();
         if (!_graphicsCore->InitializeUI(_application->GetWindow()))

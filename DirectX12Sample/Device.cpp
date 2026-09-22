@@ -80,6 +80,7 @@ void Device::Initialize()
         Global::viewManager->AddDescriptorHeap(ViewManager::Type::RENDER_TARGET, handle);
 	}
 
+    Global::viewManager->AddDescriptorHeap(ViewManager::Type::DEPTH_STENCIL, _depthStencilHandle);
 	ResizeSwapChain();
 }
 
@@ -200,8 +201,9 @@ void Device::ClearBackBuffer(UINT flag, XMVECTOR color, float depth, UINT stenci
                                                    D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
     _commandList->ResourceBarrier(1, &br);
-    _commandList->OMSetRenderTargets(1, &_renderTargetHandles[_renderTargetIndex], FALSE, nullptr);
+    _commandList->OMSetRenderTargets(1, &_renderTargetHandles[_renderTargetIndex], FALSE, &_depthStencilHandle);
     _commandList->ClearRenderTargetView(_renderTargetHandles[_renderTargetIndex], (float*)&color, 0, nullptr);
+    _commandList->ClearDepthStencilView(_depthStencilHandle, D3D12_CLEAR_FLAG_DEPTH, depth, 0, 0, nullptr);
 }
 
 void Device::Flip()
@@ -453,6 +455,7 @@ void Device::ResizeSwapChain()
 	_commandList->Reset(_commandAllocator.Get(), nullptr);
 
 	CreateBackBuffer();
+    CreateDepthBuffer();
 
 
     _commandList->Close();
@@ -547,6 +550,24 @@ void Device::CreateBackBuffer()
         _device->CreateRenderTargetView(_swapchainBuffers[i].Get(), nullptr, _renderTargetHandles[i]);
 	}
 
+}
+
+void Device::CreateDepthBuffer()
+{
+    // 스왑체인과 같은 크기로 재생성하며 이전 프레임의 GPU 완료 이후에만 호출한다.
+    _depthBuffer.Reset();
+    const CD3DX12_HEAP_PROPERTIES heap(D3D12_HEAP_TYPE_DEFAULT);
+    const auto descriptor = CD3DX12_RESOURCE_DESC::Tex2D(
+        GetDepthBufferFormat(), _newMode.Width, _newMode.Height, 1, 1, 1, 0,
+        D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+    D3D12_CLEAR_VALUE clearValue{};
+    clearValue.Format = GetDepthBufferFormat();
+    clearValue.DepthStencil.Depth = 1.0f;
+    const HRESULT hr = _device->CreateCommittedResource(
+        &heap, D3D12_HEAP_FLAG_NONE, &descriptor, D3D12_RESOURCE_STATE_DEPTH_WRITE, &clearValue,
+        IID_PPV_ARGS(_depthBuffer.GetAddressOf()));
+    FAILED_CHECK_MESSAGE(hr, L"Device::CreateDepthBuffer : CreateCommittedResource Failed");
+    _device->CreateDepthStencilView(_depthBuffer.Get(), nullptr, _depthStencilHandle);
 }
 
 void Device::CreateBuffer(UINT size, ComPtr<ID3D12Resource>& buffer)

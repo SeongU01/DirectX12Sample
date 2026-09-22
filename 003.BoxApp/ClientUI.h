@@ -8,7 +8,7 @@ public:
     ~ClientUI() = default;
 
     // 클라이언트별 위젯 구성만 담당하며 ImGui 초기화와 렌더링은 엔진에 맡긴다.
-    void               Draw(LinearColor& sceneColor);
+    void               Draw(LinearColor& sceneColor, XMFLOAT3& rotationDegrees);
     const LinearColor& GetClearColor() const { return _clearColor; }
 
 private:

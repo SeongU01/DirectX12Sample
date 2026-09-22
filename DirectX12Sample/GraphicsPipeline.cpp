@@ -26,12 +26,13 @@ void GraphicsPipeline::Initialize(Device& device, const Descriptor& descriptor)
     pipeline.RasterizerState       = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
     pipeline.BlendState            = CD3DX12_BLEND_DESC(D3D12_DEFAULT);
     pipeline.DepthStencilState     = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
-    pipeline.DepthStencilState.DepthEnable   = FALSE;
+    pipeline.DepthStencilState.DepthEnable   = descriptor.depthStencilFormat != DXGI_FORMAT_UNKNOWN;
     pipeline.DepthStencilState.StencilEnable = FALSE;
     pipeline.SampleMask            = UINT_MAX;
     pipeline.PrimitiveTopologyType = descriptor.topologyType;
     pipeline.NumRenderTargets      = 1;
     pipeline.RTVFormats[0]         = descriptor.renderTargetFormat;
+    pipeline.DSVFormat             = descriptor.depthStencilFormat;
     pipeline.SampleDesc.Count      = 1;
 
     const HRESULT hr =

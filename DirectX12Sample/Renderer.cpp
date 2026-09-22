@@ -16,9 +16,11 @@ struct DrawConstants
 {
     XMFLOAT4X4  world;
     LinearColor tint;
+    ShadingMode shading;
 };
 
-static_assert(sizeof(DrawConstants) == sizeof(float) * 20);
+static_assert(sizeof(DrawConstants) == sizeof(float) * 21);
+static_assert(offsetof(DrawConstants, shading) == sizeof(float) * 20);
 } // namespace
 
 Renderer::Renderer() = default;
@@ -44,7 +46,7 @@ void Renderer::Render(const LinearColor& clearColor)
 
         for (const RenderItem& item : _renderItems)
         {
-            const DrawConstants constants{item.world, item.tint};
+            const DrawConstants constants{item.world, item.tint, item.shading};
             commandList->SetGraphicsRoot32BitConstants(
                 1, static_cast<UINT>(sizeof(constants) / sizeof(float)), &constants, 0);
             item.mesh->Render(commandList);
@@ -106,7 +108,7 @@ void Renderer::InitializePipeline()
 
     CD3DX12_ROOT_PARAMETER rootParameters[2];
     rootParameters[0].InitAsConstantBufferView(0, 0, D3D12_SHADER_VISIBILITY_VERTEX);
-    rootParameters[1].InitAsConstants(20, 1, 0, D3D12_SHADER_VISIBILITY_ALL);
+    rootParameters[1].InitAsConstants(sizeof(DrawConstants) / sizeof(float), 1, 0, D3D12_SHADER_VISIBILITY_ALL);
     CD3DX12_ROOT_SIGNATURE_DESC rootSignature(
         static_cast<UINT>(std::size(rootParameters)), rootParameters, 0, nullptr,
         D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT);
@@ -128,6 +130,7 @@ void Renderer::InitializePipeline()
         .rootSignature = rootSignature,
         .topologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE,
         .renderTargetFormat = Global::device->GetMode().Format,
+        .depthStencilFormat = Global::device->GetDepthBufferFormat(),
     };
 
     _pipeline = std::make_unique<GraphicsPipeline>();

@@ -36,6 +36,8 @@ private:
         0.0f, 0.0f, 0.0f, 1.0f,
     };
     LinearColor   _sceneColor{0.95f, 0.35f, 0.15f, 1.0f};
+    // 회전 각도는 샘플 상태이며, 엔진에는 계산된 월드 행렬만 전달한다.
+    XMFLOAT3      _rotationDegrees{0.0f, 0.0f, 0.0f};
     // 클라이언트는 위젯 상태만 소유하고 ImGui 백엔드는 GraphicsCore가 소유한다.
     std::unique_ptr<ClientUI> _clientUI;
 };
