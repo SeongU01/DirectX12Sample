@@ -1,5 +1,5 @@
-#include "GraphicsCore.h"
 #include "pch.h"
+#include "GraphicsCore.h"
 #include "ImGuiLayer.h"
 
 namespace Global
@@ -162,4 +162,9 @@ void GraphicsCore::Finalize()
 bool GraphicsCore::ProcessUIWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const
 {
 	return _imGuiLayer && _imGuiLayer->ProcessWindowMessage(window, message, wParam, lParam);
+}
+
+UIInputCapture GraphicsCore::GetUIInputCapture() const
+{
+    return _imGuiLayer ? _imGuiLayer->GetInputCapture() : UIInputCapture{};
 }

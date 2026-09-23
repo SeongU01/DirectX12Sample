@@ -7,6 +7,12 @@ using LinearColor    = std::array<float, 4>;
 class BaseMesh;
 using MeshHandle = std::shared_ptr<BaseMesh>;
 
+struct UIInputCapture
+{
+    bool mouse = false;
+    bool keyboard = false;
+};
+
 struct RenderView
 {
     XMFLOAT4X4 view{

@@ -132,3 +132,13 @@ bool ImGuiLayer::ProcessWindowMessage(HWND window, UINT message, WPARAM wParam, 
 {
     return _initialized && ImGui_ImplWin32_WndProcHandler(window, message, wParam, lParam) != 0;
 }
+
+UIInputCapture ImGuiLayer::GetInputCapture() const
+{
+    if (!_initialized)
+    {
+        return {};
+    }
+    const ImGuiIO& io = ImGui::GetIO();
+    return {.mouse = io.WantCaptureMouse, .keyboard = io.WantCaptureKeyboard || io.WantTextInput};
+}

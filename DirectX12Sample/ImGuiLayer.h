@@ -21,6 +21,7 @@ public:
 
     // Win32 입력 메시지를 ImGui 플랫폼 백엔드에 전달한다.
     bool ProcessWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const;
+    UIInputCapture GetInputCapture() const;
 
 private:
     GraphicsCore* _graphicsCore     = nullptr;

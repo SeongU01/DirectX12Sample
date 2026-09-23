@@ -24,6 +24,7 @@ public:
 	void       Submit(const RenderItem& item) const;
 
 	bool ProcessUIWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const;
+    UIInputCapture GetUIInputCapture() const;
 
 private:
 	// UI 백엔드에서만 사용하는 디스크립터 인터페이스이므로 클라이언트에는 노출하지 않는다.
