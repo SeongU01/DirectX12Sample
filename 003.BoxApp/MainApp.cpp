@@ -1,4 +1,4 @@
-#include "MainApp.h"
+﻿#include "MainApp.h"
 #include "Timer.h"
 #include "Application.h"
 #include "ClientUI.h"
