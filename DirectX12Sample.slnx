@@ -5,5 +5,6 @@
   <Project Path="001.Initialize/001.Initialize.vcxproj" Id="ff81f3c8-d7a7-46e0-ba41-75baeeae7e1d" />
   <Project Path="002.TriangleApp/002.TriangleApp.vcxproj" Id="505f6d22-d6c2-45c5-9aa6-f084367283b0" />
   <Project Path="003.BoxApp/003.BoxApp.vcxproj" Id="733f6fbe-4816-4a96-af2a-d0f91d19b4d8" />
+  <Project Path="004.Camera/004.Camera.vcxproj" Id="c0a1a7fa-e602-4e69-8b50-4c0571d07e80" />
   <Project Path="DirectX12Sample/DirectX12Sample.vcxproj" Id="f0da1f6c-f706-415a-b167-2df728c5ba4f" />
 </Solution>
