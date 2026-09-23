@@ -146,6 +146,9 @@
     <ClInclude Include="Camera.h">
       <Filter>Graphics\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="FpsCameraController.h">
+      <Filter>Graphics\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="ThirdParty\include\imgui_impl_dx12.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -212,6 +215,12 @@
       <Filter>Graphics\Model</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCameraController.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCameraControllerWin32.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\source\imgui\imgui.cpp">
