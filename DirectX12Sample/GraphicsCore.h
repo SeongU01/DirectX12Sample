@@ -1,6 +1,10 @@
 #pragma once
 #include "GeometryGenerator.h"
 
+struct StaticMeshData;
+struct PbrLighting;
+class Texture2D;
+
 class GraphicsCore
 {
 public:
@@ -20,6 +24,10 @@ public:
 	void Flip() const;
 	void Finalize();
 	MeshHandle CreateMesh(const GeometryGenerator::MeshData& meshData) const;
+    MeshHandle CreateStaticMesh(const StaticMeshData& meshData) const;
+    std::shared_ptr<Texture2D> LoadTexture(const std::filesystem::path& relativePath, bool sRGB = false) const;
+    void SetLighting(const PbrLighting& lighting, UINT debugMode = 0) const;
+    SIZE GetViewportSize() const;
 	void       SetView(const RenderView& view) const;
 	void       Submit(const RenderItem& item) const;
 

@@ -9,7 +9,7 @@ void GraphicsPipeline::Initialize(Device& device, const Descriptor& descriptor)
         d3dUtil::CompileShader(descriptor.shaderPath.c_str(), descriptor.vertexEntry.c_str(),
                                descriptor.vertexTarget.c_str());
     const ComPtr<IDxcBlob> pixelShader =
-        d3dUtil::CompileShader(descriptor.shaderPath.c_str(), descriptor.pixelEntry.c_str(),
+        d3dUtil::CompileShader((descriptor.pixelShaderPath.empty() ? descriptor.shaderPath : descriptor.pixelShaderPath).c_str(), descriptor.pixelEntry.c_str(),
                                descriptor.pixelTarget.c_str());
 
     D3D12_ROOT_SIGNATURE_DESC rootSignature = descriptor.rootSignature;

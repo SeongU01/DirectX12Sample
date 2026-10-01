@@ -102,6 +102,11 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="BaseMesh.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="AssetPaths.h" />
+    <ClInclude Include="Texture2D.h" />
+    <ClInclude Include="PbrMaterial.h" />
+    <ClInclude Include="StaticMeshGeometry.h" />
+    <ClInclude Include="PbrRenderPass.h" />
     <ClInclude Include="FpsCameraController.h" />
     <ClInclude Include="CommandController.h" />
     <ClInclude Include="CommandSet.h" />
@@ -132,6 +137,10 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BaseMesh.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="AssetPaths.cpp" />
+    <ClCompile Include="Texture2D.cpp" />
+    <ClCompile Include="StaticMeshGeometry.cpp" />
+    <ClCompile Include="PbrRenderPass.cpp" />
     <ClCompile Include="FpsCameraController.cpp" />
     <ClCompile Include="FpsCameraControllerWin32.cpp" />
     <ClCompile Include="CommandController.cpp" />
@@ -175,9 +184,33 @@
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shaders\BasicColor.hlsl">
+    <Content Include="Shaders\*.hlsl;Shaders\*.hlsli">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\PbrCommon.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Shaders\PbrLighting.hlsli">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\BasicColor.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shaders\PbrPS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Shaders\StaticMeshVS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
