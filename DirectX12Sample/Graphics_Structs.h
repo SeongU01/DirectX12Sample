@@ -7,6 +7,12 @@ using LinearColor    = std::array<float, 4>;
 class BaseMesh;
 using MeshHandle = std::shared_ptr<BaseMesh>;
 
+struct UIInputCapture
+{
+    bool mouse = false;
+    bool keyboard = false;
+};
+
 struct RenderView
 {
     XMFLOAT4X4 view{
@@ -30,6 +36,8 @@ enum class ShadingMode : UINT
     Flat = 1,
 };
 
+struct PbrMaterial;
+
 struct RenderItem
 {
     MeshHandle  mesh;
@@ -41,6 +49,7 @@ struct RenderItem
     };
     LinearColor tint{1.0f, 1.0f, 1.0f, 1.0f};
     ShadingMode shading = ShadingMode::Unlit;
+    std::shared_ptr<PbrMaterial> material;
 };
 
 struct DescriptorHandles

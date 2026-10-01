@@ -1,5 +1,5 @@
-#include "GraphicsCore.h"
 #include "pch.h"
+#include "GraphicsCore.h"
 #include "ImGuiLayer.h"
 
 namespace Global
@@ -162,4 +162,31 @@ void GraphicsCore::Finalize()
 bool GraphicsCore::ProcessUIWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const
 {
 	return _imGuiLayer && _imGuiLayer->ProcessWindowMessage(window, message, wParam, lParam);
+}
+
+MeshHandle GraphicsCore::CreateStaticMesh(const StaticMeshData& meshData) const
+{
+    return _renderer->CreateStaticMesh(meshData);
+}
+
+std::shared_ptr<Texture2D> GraphicsCore::LoadTexture(const std::filesystem::path& relativePath, bool sRGB) const
+{
+    auto texture = std::make_shared<Texture2D>();
+    texture->Load(relativePath, sRGB);
+    return texture;
+}
+
+void GraphicsCore::SetLighting(const PbrLighting& lighting, UINT debugMode) const
+{
+    _renderer->SetLighting(lighting, debugMode);
+}
+
+SIZE GraphicsCore::GetViewportSize() const
+{
+    return _device->GetResolution();
+}
+
+UIInputCapture GraphicsCore::GetUIInputCapture() const
+{
+    return _imGuiLayer ? _imGuiLayer->GetInputCapture() : UIInputCapture{};
 }

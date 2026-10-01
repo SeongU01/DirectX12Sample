@@ -69,6 +69,30 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{4f45f6f2-7e35-40d7-a72d-2efeddfc0411}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Graphics\Texture">
+      <UniqueIdentifier>{1990ad89-c3e7-4a72-9568-87a59c0e63c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Texture\Texture2D">
+      <UniqueIdentifier>{40f70d9b-c7f7-40a3-af5b-0093c5742e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{a2142bc4-6a5c-4ab5-9b58-1d364d551964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\RenderPass">
+      <UniqueIdentifier>{b3837677-b0c0-4efd-bd0e-6603a39330bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{98eafa61-9b49-4050-a741-17a5afb8b67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\VS">
+      <UniqueIdentifier>{a572e880-9d7a-4fb0-b8cc-2aa14647a930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\PS">
+      <UniqueIdentifier>{554f8217-0c2a-47ea-b4da-15f46476b721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Include">
+      <UniqueIdentifier>{bcc49d0c-5be5-4731-86a2-5d802a0c9703}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util.h">
@@ -146,11 +170,29 @@
     <ClInclude Include="Camera.h">
       <Filter>Graphics\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="FpsCameraController.h">
+      <Filter>Graphics\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="ThirdParty\include\imgui_impl_dx12.h">
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="ThirdParty\include\imgui_impl_win32.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Graphics\Texture\Texture2D</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetPaths.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshGeometry.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="PbrMaterial.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="PbrRenderPass.h">
+      <Filter>Graphics\RenderPass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +256,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="FpsCameraController.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="FpsCameraControllerWin32.cpp">
+      <Filter>Graphics\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="ThirdParty\source\imgui\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -232,10 +280,36 @@
     <ClCompile Include="ThirdParty\source\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Graphics\Texture\Texture2D</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetPaths.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticMeshGeometry.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="PbrRenderPass.cpp">
+      <Filter>Graphics\RenderPass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shaders\BasicColor.hlsl">
-      <Filter>Graphics\Renderer</Filter>
-    </Content>
+    <None Include="Shaders\PbrLighting.hlsli">
+      <Filter>Shader\Include</Filter>
+    </None>
+    <None Include="Shaders\PbrCommon.hlsli">
+      <Filter>Shader\Include</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\PbrPS.hlsl">
+      <Filter>Shader\PS</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\StaticMeshVS.hlsl">
+      <Filter>Shader\VS</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\BasicColor.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

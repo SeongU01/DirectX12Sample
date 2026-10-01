@@ -1,6 +1,10 @@
 #pragma once
 #include "GeometryGenerator.h"
 
+struct StaticMeshData;
+struct PbrLighting;
+class Texture2D;
+
 class GraphicsCore
 {
 public:
@@ -20,10 +24,15 @@ public:
 	void Flip() const;
 	void Finalize();
 	MeshHandle CreateMesh(const GeometryGenerator::MeshData& meshData) const;
+    MeshHandle CreateStaticMesh(const StaticMeshData& meshData) const;
+    std::shared_ptr<Texture2D> LoadTexture(const std::filesystem::path& relativePath, bool sRGB = false) const;
+    void SetLighting(const PbrLighting& lighting, UINT debugMode = 0) const;
+    SIZE GetViewportSize() const;
 	void       SetView(const RenderView& view) const;
 	void       Submit(const RenderItem& item) const;
 
 	bool ProcessUIWindowMessage(HWND window, UINT message, WPARAM wParam, LPARAM lParam) const;
+    UIInputCapture GetUIInputCapture() const;
 
 private:
 	// UI 백엔드에서만 사용하는 디스크립터 인터페이스이므로 클라이언트에는 노출하지 않는다.

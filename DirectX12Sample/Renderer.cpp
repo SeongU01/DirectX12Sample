@@ -3,6 +3,7 @@
 
 #include "GraphicsPipeline.h"
 #include "d3dUtil.h"
+#include "PbrRenderPass.h"
 
 namespace
 {
@@ -37,21 +38,33 @@ void Renderer::Render(const LinearColor& clearColor)
     const XMVECTOR color = XMVectorSet(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
     Global::device->ClearBackBuffer(0, color);
 
-    if (!_renderItems.empty())
+    _frameItems = std::move(_renderItems);
+    _renderItems.clear();
+    if (!_frameItems.empty())
     {
         ID3D12GraphicsCommandList* commandList = Global::device->GetCommandList();
         _pipeline->Bind(commandList);
         UpdateFrameConstants();
         commandList->SetGraphicsRootConstantBufferView(0, _frameConstantBuffer->GetGPUVirtualAddress());
 
-        for (const RenderItem& item : _renderItems)
+        for (const RenderItem& item : _frameItems)
         {
+            if (item.material) continue;
             const DrawConstants constants{item.world, item.tint, item.shading};
             commandList->SetGraphicsRoot32BitConstants(
                 1, static_cast<UINT>(sizeof(constants) / sizeof(float)), &constants, 0);
             item.mesh->Render(commandList);
         }
-        _renderItems.clear();
+        if (std::any_of(_frameItems.begin(), _frameItems.end(), [](const auto& item) { return item.material != nullptr; }))
+        {
+            if (!_pbrPass)
+            {
+                auto pass = std::make_unique<PbrRenderPass>();
+                pass->Initialize();
+                _pbrPass = std::move(pass);
+            }
+            _pbrPass->Draw(commandList, _renderView, _lighting, _debugMode, _frameItems);
+        }
     }
 }
 
@@ -87,6 +100,32 @@ MeshHandle Renderer::CreateMesh(const GeometryGenerator::MeshData& meshData)
 void Renderer::SetView(const RenderView& view)
 {
     _renderView = view;
+}
+
+MeshHandle Renderer::CreateStaticMesh(const StaticMeshData& meshData)
+{
+    if (meshData.vertices.empty() || meshData.indices.empty() || meshData.indices.size() % 3 != 0 ||
+        meshData.vertices.size() > UINT_MAX / sizeof(StaticMeshVertex) || meshData.indices.size() > UINT_MAX / sizeof(UINT))
+        throw std::invalid_argument("Invalid static mesh data");
+    for (UINT index : meshData.indices)
+        if (index >= meshData.vertices.size()) throw std::out_of_range("Static mesh index out of range");
+    const VIBuffer::Descriptor descriptor{
+        .vertexData = const_cast<StaticMeshVertex*>(meshData.vertices.data()),
+        .indexData = const_cast<UINT*>(meshData.indices.data()),
+        .vertexSize = static_cast<UINT>(sizeof(StaticMeshVertex) * meshData.vertices.size()),
+        .vertexStride = sizeof(StaticMeshVertex),
+        .indexSize = static_cast<UINT>(sizeof(UINT) * meshData.indices.size()),
+        .indexCount = static_cast<UINT>(meshData.indices.size()),
+    };
+    auto mesh = std::make_shared<BaseMesh>();
+    mesh->Initialize(descriptor);
+    return mesh;
+}
+
+void Renderer::SetLighting(const PbrLighting& lighting, UINT debugMode)
+{
+    _lighting = lighting;
+    _debugMode = debugMode;
 }
 
 void Renderer::Submit(const RenderItem& item)

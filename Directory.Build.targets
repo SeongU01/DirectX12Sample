@@ -1,4 +1,13 @@
 <Project>
+  <Target Name="CopySharedSampleAssets" AfterTargets="Build"
+          Condition="'$(MSBuildProjectName)' == 'DirectX12Sample'">
+    <ItemGroup>
+      <SharedSampleAsset Include="$(MSBuildThisFileDirectory)Asset\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SharedSampleAsset)"
+          DestinationFiles="@(SharedSampleAsset->'$(OutDir)Asset\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
   <Target Name="RemoveTransientCompilerMetadata" AfterTargets="Build">
     <ItemGroup>
       <TransientCompilerMetadata Include="$(IntDir)**\*.obj.dt.d.json" />
